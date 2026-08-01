@@ -53,6 +53,9 @@
     <None Update="WorldServer.example.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="WorldServer.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <Import Project="./ExtractGameTableFiles.targets" Condition="$(ExtractGameTables) == 'true'" />
