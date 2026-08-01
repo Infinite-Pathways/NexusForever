@@ -22,7 +22,10 @@ namespace NexusForever.Game.Cinematic.Cinematics
             SetupTexts();
             SetupCamera();
 
-            Keyframes.Add(new VisualEffect(VO_MONDO, Player.Guid, delay: 950));
+            Keyframes.Add("ScreenEffects", new List<IKeyframeAction>
+            {
+                new VisualEffect(VO_MONDO, Player.Guid, initialDelay: 950),
+            });
         }
 
         private void SetupActors()
@@ -57,7 +60,7 @@ namespace NexusForever.Game.Cinematic.Cinematics
                 DurationEnd = 1500
             });
 
-            foreach (IKeyframeAction keyframeAction in Keyframes)
+            foreach (IKeyframeAction keyframeAction in Keyframes.Values.SelectMany(i => i))
                 keyframeAction.Send(Player.Session);
         }
     }

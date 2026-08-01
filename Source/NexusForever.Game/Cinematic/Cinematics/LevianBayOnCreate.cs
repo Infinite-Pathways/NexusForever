@@ -24,16 +24,19 @@ namespace NexusForever.Game.Cinematic.Cinematics
             SetupTexts();
             SetupCamera();
 
-            Keyframes.AddRange(
-            [
+            Keyframes.Add("ScreenEffects", new List<IKeyframeAction>
+            {
                 new VisualEffect(30667, Player.Guid),
                 new VisualEffect(21853, Player.Guid),
                 new VisualEffect(29743, Player.Guid),
                 new VisualEffect(27968, Player.Guid),
-                new VisualEffect(30489, Player.Guid, delay: 4367)
-            ]);
+                new VisualEffect(30489, Player.Guid, initialDelay: 4367)
+            });
 
-            Keyframes.Add(new VisualEffect(0, Player.Guid, removeOnCameraEnd: true));
+            Keyframes.Add("PlayerVisuals", new List<IKeyframeAction>
+            {
+                new VisualEffect(0, Player.Guid, removeOnCameraEnd: true),
+            });
         }
 
         private void SetupActors()
@@ -57,7 +60,7 @@ namespace NexusForever.Game.Cinematic.Cinematics
 
             AddActor(new Actor(0, EntityCreateFlag.UseDefaultBirthSequence | EntityCreateFlag.Immediate | EntityCreateFlag.HasInteractionPrereq, -1.134464144706726f, new Position(new Vector3(-3858.369384765625f, -973.4382934570312f, -6048.97216796875f))), new List<IVisualEffect>
             {
-                new VisualEffect(21598, delay: 26000)
+                new VisualEffect(21598, initialDelay: 26000)
             });
         }
 
@@ -92,7 +95,7 @@ namespace NexusForever.Game.Cinematic.Cinematics
                 DurationEnd = 1500
             });
 
-            foreach (IKeyframeAction keyframeAction in Keyframes)
+            foreach (IKeyframeAction keyframeAction in Keyframes.Values.SelectMany(i => i))
                 keyframeAction.Send(Player.Session);
         }
     }

@@ -60,7 +60,8 @@ namespace NexusForever.Game.Map.Instance
 
         protected override void InitialiseScriptCollection()
         {
-            scriptCollection = scriptManager.InitialiseOwnedScripts<IResidenceMapInstance>(this, Entry.Id);
+            scriptCollection = ScriptManager.Instance.InitialiseOwnedCollection<IResidenceMapInstance>(this);
+            ScriptManager.Instance.InitialiseOwnedScripts<IResidenceMapInstance>(scriptCollection, Entry.Id);
         }
 
         /// <summary>
@@ -89,10 +90,7 @@ namespace NexusForever.Game.Map.Instance
             plug.Initialise(plot.PlotInfoEntry, plot.PlugItemEntry);
             plot.PlugEntity = plug;
 
-            EnqueueAdd(plug, new MapPosition
-            {
-                Position = Vector3.Zero
-            });
+            EnqueueAdd(plug, Vector3.Zero);
         }
 
         private void RemoveResidence(IResidence residence)
@@ -125,9 +123,10 @@ namespace NexusForever.Game.Map.Instance
             };
         }
 
-        protected override void AddEntity(IGridEntity entity, Vector3 vector)
+        protected override void AddEntity(IGridEntity entity, Vector3 vector, OnAddDelegate add = null)
         {
-            base.AddEntity(entity, vector);
+            base.AddEntity(entity, vector, add);
+
             if (entity is not IPlayer player)
                 return;
 

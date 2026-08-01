@@ -34,13 +34,13 @@ namespace NexusForever.Game.Cinematic.Cinematics
             SetupTexts();
             SetupCamera();
 
-            Keyframes.AddRange(
-            [
+            Keyframes.Add("ScreenEffects", new List<IKeyframeAction>
+            {
                 new VisualEffect(21853, Player.Guid),
                 new VisualEffect(50915, Player.Guid),
                 new VisualEffect(50760, Player.Guid, duration: 3000),
-                new VisualEffect(50761, Player.Guid, delay: 3000)
-            ]);
+                new VisualEffect(50761, Player.Guid, initialDelay: 3000)
+            });
         }
 
         private void SetupActors()
@@ -83,12 +83,12 @@ namespace NexusForever.Game.Cinematic.Cinematics
 
             AddActor(new Actor(ACTOR_EXILE_ELITE, EntityCreateFlag.Immediate | EntityCreateFlag.HasInteractionPrereq, 1.9024090766906738f, new Position(new Vector3(-112.6760025024414f, -860.2139892578125f, 543.1400146484375f))), new List<IVisualEffect>
             {
-                new VisualEffect(50720, delay: 2500),
+                new VisualEffect(50720, initialDelay: 2500),
             });
 
             AddActor(new Actor(ACTOR_EXILE_ELITE, EntityCreateFlag.Immediate | EntityCreateFlag.HasInteractionPrereq, -2.4085545539855957f, new Position(new Vector3(-133.89700317382812f, -859.5999755859375f, 585.364990234375f))), new List<IVisualEffect>
             {
-                new VisualEffect(50720, delay: 3100),
+                new VisualEffect(50720, initialDelay: 3100),
             });
 
             AddActor(new Actor(ACTOR_DOMINION_BATTLEBEAST, EntityCreateFlag.Immediate | EntityCreateFlag.HasInteractionPrereq, 0.2617994248867035f, new Position(new Vector3(-143.91900634765625f, -878.0020141601562f, 298.3970031738281f)), initialDelay: 6000), []);
@@ -148,7 +148,7 @@ namespace NexusForever.Game.Cinematic.Cinematics
                 DurationEnd   = 1500
             });
 
-            foreach (IKeyframeAction keyframeAction in Keyframes)
+            foreach (IKeyframeAction keyframeAction in Keyframes.Values.SelectMany(i => i))
                 keyframeAction.Send(Player.Session);
         }
     }

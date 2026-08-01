@@ -6,14 +6,14 @@ namespace NexusForever.Game.Cinematic
 {
     public class ActorVisibility : IActorVisibility
     {
-        public uint Delay { get; }
+        public uint InitialDelay { get; }
         public IActor Actor { get; }
         public bool Hide { get; }
         public bool AffectOnlyPlayers { get; }
 
         public ActorVisibility(uint delay, IActor actor, bool hide = false)
         {
-            Delay = delay;
+            InitialDelay = delay;
             Actor = actor;
             Hide  = hide;
         }
@@ -22,7 +22,7 @@ namespace NexusForever.Game.Cinematic
         {
             session.EnqueueMessageEncrypted(new ServerCinematicActorVisibility
             {
-                Delay             = Delay,
+                Delay             = InitialDelay,
                 UnitId            = Actor.UnitId,
                 Hide              = Hide,
                 AffectOnlyPlayers = AffectOnlyPlayers

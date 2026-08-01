@@ -6,21 +6,21 @@ namespace NexusForever.Game.Cinematic
 {
     public class FlagsKeyframe : IFlagsKeyframe
     {
-        public uint Delay { get; }
+        public uint InitialDelay { get; }
         public uint Flags { get; }
 
         public FlagsKeyframe(uint delay, uint flags)
         {
-            Delay = delay;
+            InitialDelay = delay;
             Flags = flags;
         }
 
         public void Send(IGameSession session)
         {
-            session.EnqueueMessageEncrypted(new ServerCinematicFlags
+            session.EnqueueMessageEncrypted(new ServerCinematicScene
             {
-                Delay = Delay,
-                Flags = Flags
+                Delay = InitialDelay,
+                SceneId = Flags
             });
         }
     }

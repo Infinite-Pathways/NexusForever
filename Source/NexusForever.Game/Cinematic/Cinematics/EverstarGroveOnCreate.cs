@@ -25,12 +25,12 @@ namespace NexusForever.Game.Cinematic.Cinematics
             SetupTexts();
             SetupCamera();
 
-            Keyframes.AddRange(
-            [
+            Keyframes.Add("ScreenEffects", new List<IKeyframeAction>
+            {
                 new VisualEffect(21853, Player.Guid),
                 new VisualEffect(24610, Player.Guid),
                 new VisualEffect(24612, Player.Guid)
-            ]);
+            });
         }
 
         private void SetupActors()
@@ -74,7 +74,7 @@ namespace NexusForever.Game.Cinematic.Cinematics
         {
             base.Play();
 
-            foreach (IKeyframeAction keyframeAction in Keyframes)
+            foreach (IKeyframeAction keyframeAction in Keyframes.Values.SelectMany(i => i))
                 keyframeAction.Send(Player.Session);
         }
     }

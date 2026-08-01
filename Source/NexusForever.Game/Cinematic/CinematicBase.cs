@@ -17,7 +17,7 @@ namespace NexusForever.Game.Cinematic
         public CancelType InitialCancelMode { get; set; }
         public Dictionary</* Id */ uint, IActor> Actors { get; } = [];
         public Dictionary</* Delay */ uint, /* TextId */ uint> Texts { get; } = [];
-        public List<IKeyframeAction> Keyframes { get; } = [];
+        public Dictionary<string, List<IKeyframeAction>> Keyframes { get; } = new();
         public List<ICamera> Cameras { get; } = [];
         public ITransition StartTransition { get; protected set; }
         public ITransition EndTransition { get; protected set; }

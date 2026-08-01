@@ -1,16 +1,15 @@
 ﻿using NexusForever.Network.Message;
 
-namespace NexusForever.Network.World.Message.Model.Entity
+namespace NexusForever.Network.World.Message.Model
 {
-    // If a Tether CCState is applied to the player, the TetherUnit is the unit from which the tether length is calculated.
     [Message(GameMessageOpcode.ServerEntityCCTetherUnit)]
     public class ServerEntityCCTetherUnit : IWritable
     {
-        public uint UnitId { get; set; }
+        public uint Guid { get; set; }
 
         public void Write(GamePacketWriter writer)
         {
-            writer.Write(UnitId);
+            writer.Write(Guid);
         }
     }
 }

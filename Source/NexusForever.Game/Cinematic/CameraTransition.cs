@@ -6,7 +6,7 @@ namespace NexusForever.Game.Cinematic
 {
     public class CameraTransition : ICameraTransition
     {
-        public uint Delay { get; set; }
+        public uint InitialDelay { get; set; }
         public uint Type { get; set; }
         public ushort DurationStart { get; set; }
         public ushort DurationMid { get; set; }
@@ -14,7 +14,7 @@ namespace NexusForever.Game.Cinematic
 
         public CameraTransition(uint delay, uint type, ushort start = 1500, ushort mid = 0, ushort end = 1500)
         {
-            Delay         = delay;
+            InitialDelay         = delay;
             Type          = type;
             DurationStart = start;
             DurationMid   = mid;
@@ -25,7 +25,7 @@ namespace NexusForever.Game.Cinematic
         {
             session.EnqueueMessageEncrypted(new ServerCinematicCameraTransition
             {
-                Delay         = Delay,
+                Delay         = InitialDelay,
                 Type          = Type,
                 DurationStart = DurationStart,
                 DurationMid   = DurationMid,

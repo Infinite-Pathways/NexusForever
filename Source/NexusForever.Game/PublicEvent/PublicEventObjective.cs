@@ -14,12 +14,17 @@ namespace NexusForever.Game.PublicEvent
         public PublicEventObjectiveEntry Entry { get; private set; }
         public PublicEventStatus Status { get; private set; }
         public uint Count { get; private set; }
-        public uint DynamicMax { get; set; }
+        public uint DynamicMax { get; private set; }
+        public uint Checklist { get; private set; }
 
         public bool IsBusy { get; private set; }
 
         private double elapsedTimer;
         private UpdateTimer failureTimer;
+
+        private bool IsChecklist => Entry.PublicEventObjectiveTypeEnum
+            is PublicEventObjectiveType.ActivateTargetGroupChecklist
+            or PublicEventObjectiveType.TalkToChecklist;
 
         /// <summary>
         /// Initialise <see cref="PublicEventObjective"/> with suppled <see cref="IPublicEventTeam"/> and <see cref="PublicEventObjectiveEntry"/>.
@@ -66,7 +71,10 @@ namespace NexusForever.Game.PublicEvent
 
         private void BroadcastObjectiveUpdate()
         {
-            BroadcastObjectiveUpdate(Build());
+            BroadcastObjectiveUpdate(new ServerPublicEventObjectiveUpdate
+            {
+                Objective = Build()
+            });
         }
 
         private void BroadcastObjectiveStatusUpdate()
@@ -113,7 +121,18 @@ namespace NexusForever.Game.PublicEvent
                 return;
 
             uint oldCount = Count;
-            Count = (uint)Math.Max(0, (int)Count + count);
+
+            if (IsChecklist)
+            {
+                uint flag = (uint)(1 << count);
+                if ((Checklist & flag) == 0)
+                {
+                    Checklist |= flag;
+                    Count++;
+                }
+            }
+            else
+                Count = (uint)Math.Max(0, (int)Count + count);
 
             if (oldCount != Count)
                 BroadcastObjectiveUpdate();
@@ -124,7 +143,7 @@ namespace NexusForever.Game.PublicEvent
 
         private bool IsComplete()
         {
-            if (Entry.PublicEventObjectiveFlags.HasFlag(PublicEventObjectiveFlag.Unknown80))
+            if (Entry.PublicEventObjectiveFlags.HasFlag(PublicEventObjectiveFlag.DynamicObjective))
                 return Count >= DynamicMax;
 
             return Count >= Entry.Count;
@@ -136,12 +155,31 @@ namespace NexusForever.Game.PublicEvent
         /// <remarks>
         /// This shows the objective to members and allows it to be updated.
         /// </remarks>
-        public void ActivateObjective()
+        public void ActivateObjective(uint max)
         {
             if (Status != PublicEventStatus.Inactive)
                 return;
 
+            DynamicMax = max;
             SetStatus(PublicEventStatus.Active);
+        }
+
+        /// <summary>
+        /// Reset the objective.
+        /// </summary>
+        /// <remarks>
+        /// This will reset the objective to its initial state allowing it to be activated again.
+        /// </remarks>
+        public void ResetObjective()
+        {
+            if (Status != PublicEventStatus.Succeeded)
+                return;
+
+            Count      = 0;
+            DynamicMax = 0;
+            Checklist  = 0;
+
+            SetStatus(PublicEventStatus.Inactive);
         }
 
         public Network.World.Message.Model.Shared.PublicEventObjective Build()
@@ -159,9 +197,9 @@ namespace NexusForever.Game.PublicEvent
         {
             return new Network.World.Message.Model.Shared.PublicEventObjectiveStatus
             {
-                Status     = Status,
-                Count      = Count,
-                DynamicMax = DynamicMax
+                Status        = Status,
+                ObjectiveData = IsChecklist ? Checklist : Count,
+                DynamicMax    = DynamicMax
             };
         }
     }

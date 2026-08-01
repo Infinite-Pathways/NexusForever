@@ -6,7 +6,7 @@ namespace NexusForever.Network.World.Message.Model.Cinematic
     [Message(GameMessageOpcode.ServerCinematicVisualEffectAdd)]
     public class ServerCinematicVisualEffectAdd : IWritable
     {
-        public uint Delay { get; set; }
+        public uint InitialDelay { get; set; }
         public uint VisualEffectUniqueId { get; set; }
         public uint VisualEffectId { get; set; }
         public uint UnitId { get; set; }
@@ -15,7 +15,7 @@ namespace NexusForever.Network.World.Message.Model.Cinematic
 
         public void Write(GamePacketWriter writer)
         {
-            writer.Write(Delay);
+            writer.Write(InitialDelay);
             writer.Write(VisualEffectUniqueId);
             writer.Write(VisualEffectId, 17u);
             writer.Write(UnitId);

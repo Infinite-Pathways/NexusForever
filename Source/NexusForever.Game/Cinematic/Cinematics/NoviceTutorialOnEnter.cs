@@ -41,20 +41,20 @@ namespace NexusForever.Game.Cinematic.Cinematics
                 AddExileTexts();
 
             // Add Scenes
-            Keyframes.AddRange(
-            [
-                new FlagsKeyframe(0, 259504),
-                new FlagsKeyframe(32500, 262143)
-            ]);
+            Keyframes.Add("Scenes", new List<IKeyframeAction>
+            {
+                new Scene(0, 259504),
+                new Scene(32500, 262143)
+            });
 
             // Add Screen Effects
-            Keyframes.AddRange(
-            [
+            Keyframes.Add("ScreenEffects", new List<IKeyframeAction>
+            {
                 new VisualEffect(50800, Player.Guid, duration: 16100),
-                new VisualEffect(50694, Player.Guid, delay: 16100, duration: 16400),
-                new VisualEffect(49483, Player.Guid, delay: 32500, duration: 4000),
-                new VisualEffect(50700, Player.Guid, delay: 36500)
-            ]);
+                new VisualEffect(50694, Player.Guid, initialDelay: 16100, duration: 16400),
+                new VisualEffect(49483, Player.Guid, initialDelay: 32500, duration: 4000),
+                new VisualEffect(50700, Player.Guid, initialDelay: 36500)
+            });
 
             // Add Player Effects
             List<IKeyframeAction> playerEffects = new()
@@ -67,7 +67,7 @@ namespace NexusForever.Game.Cinematic.Cinematics
             else
                 playerEffects.Add(new VisualEffect(VFX_DORIAN_VOICEOVER, Player.Guid));
 
-            Keyframes.AddRange(playerEffects);
+            Keyframes.Add("PlayerEffects", playerEffects);
         }
 
         private void SetupCamera()
@@ -183,8 +183,8 @@ namespace NexusForever.Game.Cinematic.Cinematics
                 DurationMid   = 0,
                 DurationEnd   = 1500
             });
-                
-            foreach (IKeyframeAction keyframeAction in Keyframes)
+
+            foreach (IKeyframeAction keyframeAction in Keyframes.Values.SelectMany(i => i))
                 keyframeAction.Send(Player.Session);
         }
     }

@@ -7,7 +7,7 @@ namespace NexusForever.Game.Cinematic
 {
     public class Transition : ITransition
     {
-        public uint Delay { get; }
+        public uint InitialDelay { get; }
         public CameraAddFlags Flags { get; }
         public uint EndTransition { get; }
         public ushort Start { get; }
@@ -16,7 +16,7 @@ namespace NexusForever.Game.Cinematic
 
         public Transition(uint delay, CameraAddFlags flags, uint endTransition, ushort start = 0, ushort mid = 0, ushort end = 0)
         {
-            Delay         = delay;
+            InitialDelay         = delay;
             Flags         = flags;
             EndTransition = endTransition;
             Start         = start;
@@ -28,7 +28,7 @@ namespace NexusForever.Game.Cinematic
         {
             session.EnqueueMessageEncrypted(new ServerCinematicCamera
             {
-                Delay             = Delay,
+                Delay             = InitialDelay,
                 Flags             = Flags,
                 EndTransition     = EndTransition,
                 TranDurationStart = Start,

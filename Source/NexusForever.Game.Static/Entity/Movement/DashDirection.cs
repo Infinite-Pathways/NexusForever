@@ -3,7 +3,7 @@
     public enum DashDirection
     {
         Forward = 1,
-        Back    = 2,
+        Backward    = 2,
         Left    = 3,
         Right   = 4
     }

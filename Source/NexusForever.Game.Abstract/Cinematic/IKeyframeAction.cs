@@ -4,7 +4,7 @@ namespace NexusForever.Game.Abstract.Cinematic
 {
     public interface IKeyframeAction
     {
-        uint Delay { get; }
+        uint InitialDelay { get; }
 
         void Send(IGameSession session);
     }

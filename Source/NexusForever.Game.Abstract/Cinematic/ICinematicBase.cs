@@ -11,7 +11,7 @@ namespace NexusForever.Game.Abstract.Cinematic
         CancelType InitialCancelMode { get; set; }
         Dictionary<uint, IActor> Actors { get; }
         Dictionary<uint, uint> Texts { get; }
-        List<IKeyframeAction> Keyframes { get; }
+        Dictionary<string, List<IKeyframeAction>> Keyframes { get; }
         List<ICamera> Cameras { get; }
         ITransition StartTransition { get; }
         ITransition EndTransition { get; }

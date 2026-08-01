@@ -8,13 +8,13 @@ namespace NexusForever.Game.Cinematic
     {
         public uint AttachType { get; set; }
         public uint AttachId { get; set; }
-        public uint Delay { get; set; }
+        public uint InitialDelay { get; set; }
         public uint ParentUnitId { get; set; }
         public bool UseRotation { get; set; }
 
         public CameraAttach(uint delay, uint attachId, ICamera parentUnit, uint attachType = 0, bool useRotation = true)
         {
-            Delay        = delay;
+            InitialDelay        = delay;
             AttachId     = attachId;
             ParentUnitId = parentUnit.CameraActor.UnitId;
             AttachType   = attachType;
@@ -27,7 +27,7 @@ namespace NexusForever.Game.Cinematic
             {
                 AttachType   = AttachType,
                 AttachId     = AttachId,
-                Delay        = Delay,
+                Delay        = InitialDelay,
                 ParentUnitId = ParentUnitId,
                 UseRotation  = UseRotation
             });

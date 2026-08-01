@@ -27,16 +27,21 @@ namespace NexusForever.Game.Cinematic.Cinematics
 
             uint dropPodUnitId = Player.GetVisibleCreature<WorldEntity>(ACTOR_GRANOK_DROP_POD).FirstOrDefault()?.Guid ?? 0u;
             if (dropPodUnitId != 0u)
-                Keyframes.Add(new VisualEffect(7913, dropPodUnitId));
+            {
+                Keyframes.Add("ScreenEffects", new List<IKeyframeAction>
+                {
+                    new VisualEffect(7913, dropPodUnitId),
+                });
+            }
 
-            Keyframes.AddRange(
-            [
+            Keyframes.Add("ScreenEffects", new List<IKeyframeAction>
+            {
                 new VisualEffect(8345, Player.Guid),
-                new VisualEffect(8341, Player.Guid, delay: 950),
-                new VisualEffect(8344, Player.Guid, delay: 3000),
-                new VisualEffect(8340, Player.Guid, delay: 5800),
-                new VisualEffect(8342, Player.Guid, delay: 7000),
-            ]);
+                new VisualEffect(8341, Player.Guid, initialDelay: 950),
+                new VisualEffect(8344, Player.Guid, initialDelay: 3000),
+                new VisualEffect(8340, Player.Guid, initialDelay: 5800),
+                new VisualEffect(8342, Player.Guid, initialDelay: 7000),
+            });
         }
 
         private void SetupActors()
@@ -46,7 +51,7 @@ namespace NexusForever.Game.Cinematic.Cinematics
             AddActor(new Actor(13562, 0, 0.33161258697509766f, initialPosition),
             [
                 new VisualEffect(7913),
-                new VisualEffect(5705, delay: 950)
+                new VisualEffect(5705, initialDelay: 950)
             ]);
 
             AddActor(new Actor(14125, 0, 0.33161258697509766f, new Position(new Vector3(4110.7099609375f, -658.8698120117188f, -5145.47998046875f)), initialDelay: 950), []);
@@ -77,7 +82,7 @@ namespace NexusForever.Game.Cinematic.Cinematics
                 DurationEnd = 1500
             });
 
-            foreach (IKeyframeAction keyframeAction in Keyframes)
+            foreach (IKeyframeAction keyframeAction in Keyframes.Values.SelectMany(i => i))
                 keyframeAction.Send(Player.Session);
         }
     }

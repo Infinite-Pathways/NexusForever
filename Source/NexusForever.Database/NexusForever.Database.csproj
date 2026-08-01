@@ -8,10 +8,12 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
     <PackageReference Include="Microting.EntityFrameworkCore.MySql" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NexusForever.Shared\NexusForever.Shared.csproj" />
+    <ProjectReference Include="..\NexusForever.Telemetry\NexusForever.Telemetry.csproj" />
   </ItemGroup>
 
 </Project>

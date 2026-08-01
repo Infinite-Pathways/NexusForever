@@ -5,12 +5,12 @@ namespace NexusForever.Network.World.Message.Model.Cinematic
     [Message(GameMessageOpcode.ServerCinematicVisualEffectEnd)]
     public class ServerCinematicVisualEffectEnd : IWritable
     {
-        public uint Delay { get; set; }
+        public uint InitialDelay { get; set; }
         public uint VisualEffectUniqueId { get; set; }
 
         public void Write(GamePacketWriter writer)
         {
-            writer.Write(Delay);
+            writer.Write(InitialDelay);
             writer.Write(VisualEffectUniqueId);
         }
     }

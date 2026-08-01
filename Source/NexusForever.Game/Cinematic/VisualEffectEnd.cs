@@ -6,12 +6,12 @@ namespace NexusForever.Game.Cinematic
 {
     public class VisualEffectEnd : IVisualEffectEnd
     {
-        public uint Delay { get; }
+        public uint InitialDelay { get; }
         public uint VisualEffectUniqueId { get; }
 
         public VisualEffectEnd(uint delay, uint visualEffectUniqueId)
         {
-            Delay          = delay;
+            InitialDelay          = delay;
             VisualEffectUniqueId = visualEffectUniqueId;
         }
 
@@ -19,7 +19,7 @@ namespace NexusForever.Game.Cinematic
         {
             session.EnqueueMessageEncrypted(new ServerCinematicVisualEffectEnd
             {
-                Delay                = Delay,
+                InitialDelay                = InitialDelay,
                 VisualEffectUniqueId = VisualEffectUniqueId
             });
         }

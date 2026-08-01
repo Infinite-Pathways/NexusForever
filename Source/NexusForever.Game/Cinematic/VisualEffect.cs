@@ -11,22 +11,22 @@ namespace NexusForever.Game.Cinematic
         public uint UnitId { get; private set; }
         public uint VisualEffectId { get; }
         public Position Position { get; }
-        public uint Delay { get; }
+        public uint InitialDelay { get; }
         public uint Duration { get; }
         public bool RemoveOnCameraEnd { get; }
 
-        public VisualEffect(uint visualEffectId, Position position = null, uint delay = 0, bool removeOnCameraEnd = false)
+        public VisualEffect(uint visualEffectId, Position position = null, uint initialDelay = 0, bool removeOnCameraEnd = false)
         {
             Id                = GlobalCinematicManager.Instance.NextCinematicId;
             VisualEffectId    = visualEffectId;
 
             Position          = position ?? new Position();
 
-            Delay             = delay;
+            InitialDelay             = initialDelay;
             RemoveOnCameraEnd = removeOnCameraEnd;
         }
 
-        public VisualEffect(uint visualEffectId, uint unitId, Position position = null, uint delay = 0, uint duration = 0, bool removeOnCameraEnd = false)
+        public VisualEffect(uint visualEffectId, uint unitId, Position position = null, uint initialDelay = 0, uint duration = 0, bool removeOnCameraEnd = false)
         {
             Id                = GlobalCinematicManager.Instance.NextCinematicId;
             VisualEffectId    = visualEffectId;
@@ -34,7 +34,7 @@ namespace NexusForever.Game.Cinematic
             Position          = position ?? new Position();
 
             UnitId            = unitId;
-            Delay             = delay;
+            InitialDelay      = initialDelay;
             Duration          = duration;
             RemoveOnCameraEnd = removeOnCameraEnd;
         }
@@ -48,7 +48,7 @@ namespace NexusForever.Game.Cinematic
         {
             session.EnqueueMessageEncrypted(new ServerCinematicVisualEffectAdd
             {
-                Delay                = Delay,
+                InitialDelay         = InitialDelay,
                 UnitId               = UnitId,
                 VisualEffectUniqueId = Id,
                 VisualEffectId       = VisualEffectId,
@@ -60,7 +60,7 @@ namespace NexusForever.Game.Cinematic
             {
                 session.EnqueueMessageEncrypted(new ServerCinematicVisualEffectEnd
                 {
-                    Delay                = Delay + Duration,
+                    InitialDelay         = InitialDelay + Duration,
                     VisualEffectUniqueId = Id
                 });
             }

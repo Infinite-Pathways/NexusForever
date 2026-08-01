@@ -15,6 +15,7 @@ namespace NexusForever.Network.Message
         ClientCommodityOrderCancel      = 0x0093,
         ClientAuctionCancel             = 0x0094,
         ClientActivateUnitCast          = 0x0097, // not sure about the name - almost the same as 0x00B3, but also initiates 0x07FD
+        ClientActivateUnitInteraction   = 0x0098,
         ClientCastPathExplorerSearching = 0x0099,
         ClientCastSpell                 = 0x009A,
         ServerChallengeShared           = 0x00A9,
@@ -49,6 +50,7 @@ namespace NexusForever.Network.Message
         ServerCostumeList               = 0x00D9,
         ServerCharacterCreate           = 0x00DC,
         ServerChannelUpdateLoot         = 0x00DD,
+        ClientDash                      = 0x00DE,
         ServerDatacubeUpdateList        = 0x00E0,
         ServerDatacubeUpdate            = 0x00E1,
         ServerDatacubeVolumeUpdate      = 0x00E2,
@@ -73,6 +75,7 @@ namespace NexusForever.Network.Message
         ServerPathExplorerPowerMapWaiting = 0x00FA,
         ServerCharacterFlagsUpdated     = 0x00FE,
         ServerResurrectionState         = 0x0100,
+        ServerResurrectionForced        = 0x0101,
         ServerGalacticArchiveRefresh    = 0x0102,
         ClientGalacticArchiveUnlock     = 0x0103,
         ServerGalacticArchiveUpdate     = 0x0104,
@@ -249,7 +252,7 @@ namespace NexusForever.Network.Message
         ServerCinematicMissileActorRemove = 0x0224,
         ServerCinematicVisualEffectEnd  = 0x0225,
         ServerCinematicStartTime        = 0x0226,
-        ServerCinematicFlags            = 0x0227,
+        ServerCinematicScene            = 0x0227,
         ServerCinematicActorAdd         = 0x0228,
         ServerCinematicStoryPanelDialogHide = 0x0229,
         ServerCinematicText             = 0x022A,
@@ -736,7 +739,7 @@ namespace NexusForever.Network.Message
         ClientSelectRealm               = 0x07DF,
         ServerLootNotify                = 0x07F2,
         ServerSpellGo                   = 0x07F4,
-        Server07F5                      = 0x07F5, // spell related
+        ServerSpellEffectExecute        = 0x07F5,
         Server07F6                      = 0x07F6, // spell related
         Server07F7                      = 0x07F7, // spell related
         Server07F8                      = 0x07F8, // spell related
@@ -744,17 +747,20 @@ namespace NexusForever.Network.Message
         Server07FA                      = 0x07FA, // spell related
         Server07FB                      = 0x07FB, // spell miss info?
         ServerSpellCastResult           = 0x07FC,
-        Server07FD                      = 0x07FD, // spell related
+        ServerSpellStartClientInteraction = 0x07FD,
         ServerSpellFinish               = 0x07FE,
         ServerSpellStart                = 0x07FF,
         ClientSpellStopCast             = 0x0801,
         ClientCancelEffect              = 0x0802,
         ServerCooldown                  = 0x0804,
-        Server0811                      = 0x0811, // spell related: broadcast parts of 0x07FF?
+        ClientSpellInteractionResult    = 0x0805,
+        ServerSpellBuffsApply           = 0x0810,
+        ServerSpellBuffsRemoved         = 0x0811,
+        ServerSpellUpdateEffectDuration = 0x0812,
         ServerSpellBuffRemove           = 0x0813,
-        Server0814                      = 0x0814, // spell related
-        Server0816                      = 0x0816, // spell related: broadcast parts of 0x07FF?
-        Server0817                      = 0x0817, // spell related
+        ServerSpellThresholdClear       = 0x0814,
+        ServerSpellThresholdStart       = 0x0816,
+        ServerSpellThresholdUpdate      = 0x0817,
         Server0818                      = 0x0818,
         Server081A                      = 0x081A, // spline related
         Server081B                      = 0x081B, // spline related

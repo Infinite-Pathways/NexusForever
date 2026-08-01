@@ -9,15 +9,15 @@ namespace NexusForever.Network.World.Message.Model.Entity
     [Message(GameMessageOpcode.ServerEntityCCStateSet)]
     public class ServerEntityCCStateSet : IWritable
     {
-        public uint UnitId { get; set; }
-        public CCState CCType { get; set; }
-        public uint SpellEffectUniqueId { get; set; }
+        public uint Guid { get; set; }
+        public CCState CCState { get; set; }
+        public uint EffectUniqueId { get; set; }
 
         public void Write(GamePacketWriter writer)
         {
-            writer.Write(UnitId);
-            writer.Write(CCType, 5u);
-            writer.Write(SpellEffectUniqueId);
+            writer.Write(Guid);
+            writer.Write(CCState, 5);
+            writer.Write(EffectUniqueId);
         }
     }
 }
