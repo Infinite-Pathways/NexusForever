@@ -7,6 +7,24 @@
 *.tbl
 *.nfmap
 
+# Configuration files
+*AccountAPI.json
+*CharacterAPI.json
+*AspireMigrations.json
+*AuthServer.json
+*CharacterServer.json
+*ChatServer.json
+*FriendshipServer.json
+*GroupServer.json
+*StsServer.json
+*WorldServer.json
+
+# Tbl databases
+Source/NexusForever.Server.ChatServer/tbl/
+Source/NexusForever.Server.Friendship/tbl/
+Source/NexusForever.WorldServer/tbl/
+
+
 # User-specific files
 *.suo
 *.user
