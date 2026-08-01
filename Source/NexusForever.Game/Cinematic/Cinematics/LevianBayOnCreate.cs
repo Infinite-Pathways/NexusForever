@@ -1,8 +1,10 @@
 ﻿using System.Numerics;
 using NexusForever.Game.Abstract.Cinematic;
 using NexusForever.Game.Abstract.Cinematic.Cinematics;
+using NexusForever.Game.Static.Cinematic;
+using NexusForever.Game.Static.Entity;
 using NexusForever.Network.World.Entity;
-using NexusForever.Network.World.Message.Model;
+using NexusForever.Network.World.Message.Model.Cinematic;
 
 namespace NexusForever.Game.Cinematic.Cinematics
 {
@@ -11,12 +13,12 @@ namespace NexusForever.Game.Cinematic.Cinematics
 
         protected override void Setup()
         {
-            Duration = 34033;
-            InitialFlags = 7;
-            InitialCancelMode = 2;
-            CinematicId = 28;
-            StartTransition = new Transition(0, 1, 2, 1000, 0, 1500);
-            EndTransition = new Transition(32533, 0, 0);
+            Duration          = 34033;
+            InitialFlags      = CinematicFlags.EndImmediate | CinematicFlags.Unknown2 | CinematicFlags.NotifyServer;
+            InitialCancelMode = CancelType.EndImmediate;
+            CinematicId       = 28;
+            StartTransition   = new Transition(0, CameraAddFlags.AddCamera, 2, 1000, 0, 1500);
+            EndTransition     = new Transition(32533, CameraAddFlags.WhiteOut, 0);
 
             SetupActors();
             SetupTexts();
@@ -40,23 +42,23 @@ namespace NexusForever.Game.Cinematic.Cinematics
         private void SetupActors()
         {
             Position initialPosition = new Position(new Vector3(-3784.26953125f, -988.6632690429688f, -6188.072265625f));
-            AddActor(new Actor(50444, 14, 3.1415929794311523f, initialPosition), new List<IVisualEffect>
-            {
+            AddActor(new Actor(50444, EntityCreateFlag.Immediate | EntityCreateFlag.HasInteractionPrereq | EntityCreateFlag.Unknown08, 3.1415929794311523f, initialPosition),
+            [
                 new VisualEffect(20016),
                 new VisualEffect(20016)
-            });
+            ]);
 
-            AddActor(new Actor(50441, 14, 3.1415929794311523f, initialPosition), new List<IVisualEffect>
-            {
+            AddActor(new Actor(50441, EntityCreateFlag.Immediate | EntityCreateFlag.HasInteractionPrereq | EntityCreateFlag.Unknown08, 3.1415929794311523f, initialPosition),
+            [
                 new VisualEffect(20016)
-            });
+            ]);
 
-            AddActor(new Actor(50442, 14, 3.1415929794311523f, initialPosition), new List<IVisualEffect>
-            {
+            AddActor(new Actor(50442, EntityCreateFlag.Immediate | EntityCreateFlag.HasInteractionPrereq | EntityCreateFlag.Unknown08, 3.1415929794311523f, initialPosition),
+            [
                 new VisualEffect(20016)
-            });
+            ]);
 
-            AddActor(new Actor(0, 7, -1.134464144706726f, new Position(new Vector3(-3858.369384765625f, -973.4382934570312f, -6048.97216796875f))), new List<IVisualEffect>
+            AddActor(new Actor(0, EntityCreateFlag.UseDefaultBirthSequence | EntityCreateFlag.Immediate | EntityCreateFlag.HasInteractionPrereq, -1.134464144706726f, new Position(new Vector3(-3858.369384765625f, -973.4382934570312f, -6048.97216796875f))), new List<IVisualEffect>
             {
                 new VisualEffect(21598, initialDelay: 26000)
             });
@@ -87,7 +89,7 @@ namespace NexusForever.Game.Cinematic.Cinematics
 
             Player.Session.EnqueueMessageEncrypted(new ServerCinematicTransitionDurationSet
             {
-                Type = 2,
+                Type = ScaleTransitionType.StartMinimized,
                 DurationStart = 1500,
                 DurationMid = 0,
                 DurationEnd = 1500

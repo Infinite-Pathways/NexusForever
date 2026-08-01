@@ -1,17 +1,17 @@
 ﻿using NexusForever.Game.Abstract.Cinematic;
 using NexusForever.Network.Session;
-using NexusForever.Network.World.Message.Model;
+using NexusForever.Network.World.Message.Model.Cinematic;
 
 namespace NexusForever.Game.Cinematic
 {
     public class Scene : IScene
     {
-        public uint Delay { get; }
+        public uint InitialDelay { get; }
         public uint SceneId { get; }
 
         public Scene(uint delay, uint sceneId)
         {
-            Delay   = delay;
+            InitialDelay = delay;
             SceneId = sceneId;
         }
 
@@ -19,7 +19,7 @@ namespace NexusForever.Game.Cinematic
         {
             session.EnqueueMessageEncrypted(new ServerCinematicScene
             {
-                Delay   = Delay,
+                Delay = InitialDelay,
                 SceneId = SceneId
             });
         }

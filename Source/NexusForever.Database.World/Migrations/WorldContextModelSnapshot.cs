@@ -17,7 +17,7 @@ namespace NexusForever.Database.World.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.9")
+                .HasAnnotation("ProductVersion", "10.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -87,6 +87,29 @@ namespace NexusForever.Database.World.Migrations
                         .HasName("PRIMARY");
 
                     b.ToTable("disable", (string)null);
+                });
+
+            modelBuilder.Entity("NexusForever.Database.World.Model.EntityEmoteModel", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int(10) unsigned")
+                        .HasDefaultValue(0u)
+                        .HasColumnName("id");
+
+                    b.Property<ushort>("EmoteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint(5) unsigned")
+                        .HasDefaultValue((ushort)0)
+                        .HasColumnName("emoteId");
+
+                    b.HasKey("Id", "EmoteId")
+                        .HasName("PRIMARY");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.ToTable("entity_emote", (string)null);
                 });
 
             modelBuilder.Entity("NexusForever.Database.World.Model.EntityEventModel", b =>
@@ -826,6 +849,18 @@ namespace NexusForever.Database.World.Migrations
                     b.ToTable("version", (string)null);
                 });
 
+            modelBuilder.Entity("NexusForever.Database.World.Model.EntityEmoteModel", b =>
+                {
+                    b.HasOne("NexusForever.Database.World.Model.EntityModel", "Entity")
+                        .WithOne("EntityEmote")
+                        .HasForeignKey("NexusForever.Database.World.Model.EntityEmoteModel", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK__entity_emote_id__entity_id");
+
+                    b.Navigation("Entity");
+                });
+
             modelBuilder.Entity("NexusForever.Database.World.Model.EntityEventModel", b =>
                 {
                     b.HasOne("NexusForever.Database.World.Model.EntityModel", "Entity")
@@ -983,6 +1018,8 @@ namespace NexusForever.Database.World.Migrations
 
             modelBuilder.Entity("NexusForever.Database.World.Model.EntityModel", b =>
                 {
+                    b.Navigation("EntityEmote");
+
                     b.Navigation("EntityEvent");
 
                     b.Navigation("EntityProperty");

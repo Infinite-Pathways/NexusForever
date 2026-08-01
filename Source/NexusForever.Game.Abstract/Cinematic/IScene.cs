@@ -2,7 +2,7 @@
 {
     public interface IScene : IKeyframeAction
     {
-        uint Delay { get; }
+        uint InitialDelay { get; }
         uint SceneId { get; }
     }
 }

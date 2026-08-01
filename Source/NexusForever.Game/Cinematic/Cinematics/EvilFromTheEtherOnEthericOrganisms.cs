@@ -1,8 +1,11 @@
 ﻿using System.Numerics;
 using NexusForever.Game.Abstract.Cinematic;
 using NexusForever.Game.Abstract.Cinematic.Cinematics;
+using NexusForever.Game.Static.Cinematic;
+using NexusForever.Game.Static.Entity;
 using NexusForever.Network.World.Entity;
 using NexusForever.Network.World.Message.Model;
+using NexusForever.Network.World.Message.Model.Cinematic;
 
 namespace NexusForever.Game.Cinematic.Cinematics
 {
@@ -17,11 +20,11 @@ namespace NexusForever.Game.Cinematic.Cinematics
         protected override void Setup()
         {
             Duration          = 18033;
-            InitialFlags      = 7;
-            InitialCancelMode = 2;
+            InitialFlags      = CinematicFlags.Unknown7;
+            InitialCancelMode = CancelType.EndImmediate;
             CinematicId       = 0;
 
-            StartTransition = new Transition(0, 1, 2, 1500, 0, 1500);
+            StartTransition = new Transition(0, CameraAddFlags.AddCamera, 2, 1500, 0, 1500);
             EndTransition   = new Transition(16533, 0, 0);
 
             SetupActors();
@@ -38,19 +41,19 @@ namespace NexusForever.Game.Cinematic.Cinematics
         {
             var position = new Position(new Vector3(-54.04f, -844.93054f, 69.21999f));
 
-            IActor cameraActor = new Actor(ActorCamera, 6, 3.141593f, position);
+            IActor cameraActor = new Actor(ActorCamera, EntityCreateFlag.Unknown06, 3.141593f, position);
             AddActor(cameraActor,
             [
                 new VisualEffect(45237)
             ]);
 
-            IActor actorMordesh = new Actor(ActorMordesh, 6, 3.141593f, position);
+            IActor actorMordesh = new Actor(ActorMordesh, EntityCreateFlag.Unknown06, 3.141593f, position);
             AddActor(actorMordesh,
             [
                 new VisualEffect(45237)
             ]);
 
-            IActor actorVoidCreature = new Actor(ActorVoidCreature, 6, 3.141593f, position);
+            IActor actorVoidCreature = new Actor(ActorVoidCreature, EntityCreateFlag.Unknown06, 3.141593f, position);
             AddActor(actorVoidCreature,
             [
                 new VisualEffect(45237),
@@ -66,7 +69,7 @@ namespace NexusForever.Game.Cinematic.Cinematics
                 new VisualEffect(47540),
             ]);
 
-            IActor actorPlayer = new Actor(ActorPlayer, 6, 3.141593f, position);
+            IActor actorPlayer = new Actor(ActorPlayer, EntityCreateFlag.Unknown06, 3.141593f, position);
             AddActor(actorPlayer,
             [
                 new VisualEffect(45237)
@@ -74,7 +77,7 @@ namespace NexusForever.Game.Cinematic.Cinematics
 
             SetAsPlayerActor(actorPlayer, position, 22);
 
-            IActor actorDatapad = new Actor(ActorDatapad, 6, 3.141593f, position);
+            IActor actorDatapad = new Actor(ActorDatapad, EntityCreateFlag.Unknown06, 3.141593f, position);
             AddActor(actorDatapad,
             [
                 new VisualEffect(45237)
@@ -106,7 +109,7 @@ namespace NexusForever.Game.Cinematic.Cinematics
 
             Player.Session.EnqueueMessageEncrypted(new ServerCinematicTransitionDurationSet
             {
-                Type          = 2,
+                Type          = ScaleTransitionType.StartMinimized,
                 DurationStart = 1500,
                 DurationMid   = 0,
                 DurationEnd   = 1500

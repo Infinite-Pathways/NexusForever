@@ -1,10 +1,11 @@
 ﻿using System.Numerics;
 using NexusForever.Game.Abstract.Cinematic;
 using NexusForever.Game.Abstract.Cinematic.Cinematics;
+using NexusForever.Game.Static.Cinematic;
 using NexusForever.Game.Static.Entity;
 using NexusForever.Game.Static.Reputation;
 using NexusForever.Network.World.Entity;
-using NexusForever.Network.World.Message.Model;
+using NexusForever.Network.World.Message.Model.Cinematic;
 
 namespace NexusForever.Game.Cinematic.Cinematics
 {
@@ -26,10 +27,10 @@ namespace NexusForever.Game.Cinematic.Cinematics
         protected override void Setup()
         {
             Duration          = 50000;
-            InitialFlags      = 7;
-            InitialCancelMode = 2;
-            StartTransition   = new Transition(0, 1, 2, 1500, 0, 1500);
-            EndTransition     = new Transition(48500, 0, 0);
+            InitialFlags      = CinematicFlags.EndImmediate | CinematicFlags.Unknown2 | CinematicFlags.NotifyServer;
+            InitialCancelMode = CancelType.EndImmediate;
+            StartTransition   = new Transition(0, CameraAddFlags.AddCamera, 2, 1500, 0, 1500);
+            EndTransition     = new Transition(48500, CameraAddFlags.WhiteOut, 0);
 
             AddActors();
             SetupCamera();
@@ -100,7 +101,7 @@ namespace NexusForever.Game.Cinematic.Cinematics
 
             foreach (uint actor in actorCreatures)
             {
-                AddActor(new Actor(actor, 6, initialAngle, initialPosition), new List<IVisualEffect>
+                AddActor(new Actor(actor, EntityCreateFlag.Immediate | EntityCreateFlag.HasInteractionPrereq, initialAngle, initialPosition), new List<IVisualEffect>
                 {
                     new VisualEffect(45237)
                 });
@@ -125,17 +126,17 @@ namespace NexusForever.Game.Cinematic.Cinematics
             uint factionHead = Player.Faction1 == Faction.Dominion ? ACTOR_ARTEMIS : ACTOR_DORIAN;
             uint factionHolo = Player.Faction1 == Faction.Dominion ? ACTOR_ARTEMIS_HOLO : ACTOR_DORIAN_HOLO;
 
-            AddActor(new Actor(factionHead, 6, initialAngle, initialPosition), new List<IVisualEffect>
-                {
+            AddActor(new Actor(factionHead, EntityCreateFlag.Immediate | EntityCreateFlag.HasInteractionPrereq, initialAngle, initialPosition),
+                [
                     new VisualEffect(45237)
-                });
+                ]);
 
-            Actor holoActor = new Actor(factionHolo, 6, initialAngle, initialPosition);
-            AddActor(holoActor, new List<IVisualEffect>
-                {
+            Actor holoActor = new Actor(factionHolo, EntityCreateFlag.Immediate | EntityCreateFlag.HasInteractionPrereq, initialAngle, initialPosition);
+            AddActor(holoActor,
+                [
                     new VisualEffect(45237),
                     new VisualEffect(24490)
-                });
+                ]);
             holoActor.AddVisibility(9600, true);
             holoActor.AddVisibility(9700, false);
             holoActor.AddVisibility(9800, true);
@@ -177,12 +178,12 @@ namespace NexusForever.Game.Cinematic.Cinematics
 
             Player.Session.EnqueueMessageEncrypted(new ServerCinematicTransitionDurationSet
             {
-                Type          = 2,
+                Type          = ScaleTransitionType.StartMinimized,
                 DurationStart = 1500,
                 DurationMid   = 0,
                 DurationEnd   = 1500
             });
-                
+
             foreach (IKeyframeAction keyframeAction in Keyframes.Values.SelectMany(i => i))
                 keyframeAction.Send(Player.Session);
         }

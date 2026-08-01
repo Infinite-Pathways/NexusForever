@@ -18,12 +18,17 @@
     <ProjectReference Include="..\NexusForever.Database.Auth\NexusForever.Database.Auth.csproj" />
     <ProjectReference Include="..\NexusForever.Database.Character\NexusForever.Database.Character.csproj" />
     <ProjectReference Include="..\NexusForever.Database.Chat\NexusForever.Database.Chat.csproj" />
+    <ProjectReference Include="..\NexusForever.Database.Friendship\NexusForever.Database.Friendship.csproj" />
     <ProjectReference Include="..\NexusForever.Database.Group\NexusForever.Database.Group.csproj" />
+    <ProjectReference Include="..\NexusForever.Database.Query\NexusForever.Database.Query.csproj" />
     <ProjectReference Include="..\NexusForever.Database.World\NexusForever.Database.World.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="AspireMigrations.example.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="AspireMigrations.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="nlog.config">

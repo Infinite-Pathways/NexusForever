@@ -64,11 +64,13 @@ namespace NexusForever.Game.Entity
         public void OpenDoor()
         {
             SetStat(Static.Entity.Stat.StandState, StandState.State1);
+            /*
+            TODO: Work out how to reimplement this. 
             EnqueueToVisible(new ServerEmote
             {
                 Guid       = Guid,
                 StandState = StandState.State1
-            });
+            });*/
 
             scriptCollection.Invoke<IDoorEntityScript>(script => script.OnOpenDoor());
         }
@@ -79,11 +81,14 @@ namespace NexusForever.Game.Entity
         public void CloseDoor()
         {
             SetStat(Static.Entity.Stat.StandState, StandState.State0);
+            /*
+             * TODO: Work out how to reimplement this.
             EnqueueToVisible(new ServerEmote
             {
                 Guid       = Guid,
                 StandState = StandState.State0
             });
+            */
 
             scriptCollection.Invoke<IDoorEntityScript>(script => script.OnDoorClose());
         }

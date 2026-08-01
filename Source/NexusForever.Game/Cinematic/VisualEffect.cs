@@ -1,7 +1,7 @@
 ﻿using NexusForever.Game.Abstract.Cinematic;
 using NexusForever.Network.Session;
 using NexusForever.Network.World.Entity;
-using NexusForever.Network.World.Message.Model;
+using NexusForever.Network.World.Message.Model.Cinematic;
 
 namespace NexusForever.Game.Cinematic
 {
@@ -22,7 +22,7 @@ namespace NexusForever.Game.Cinematic
 
             Position          = position ?? new Position();
 
-            InitialDelay      = initialDelay;
+            InitialDelay             = initialDelay;
             RemoveOnCameraEnd = removeOnCameraEnd;
         }
 
@@ -41,27 +41,27 @@ namespace NexusForever.Game.Cinematic
 
         public void SetActor(IActor unit)
         {
-            UnitId = unit.Id;
+            UnitId = unit.UnitId;
         }
 
         public void Send(IGameSession session)
         {
-            session.EnqueueMessageEncrypted(new ServerCinematicVisualEffect
+            session.EnqueueMessageEncrypted(new ServerCinematicVisualEffectAdd
             {
-                Delay             = InitialDelay,
-                UnitId            = UnitId,
-                VisualHandle      = Id,
-                VisualEffectId    = VisualEffectId,
-                Position          = Position,
-                RemoveOnCameraEnd = RemoveOnCameraEnd
+                InitialDelay         = InitialDelay,
+                UnitId               = UnitId,
+                VisualEffectUniqueId = Id,
+                VisualEffectId       = VisualEffectId,
+                Position             = Position,
+                RemoveOnCameraEnd    = RemoveOnCameraEnd
             });
 
             if (Duration > 0)
             {
                 session.EnqueueMessageEncrypted(new ServerCinematicVisualEffectEnd
                 {
-                    Delay        = InitialDelay + Duration,
-                    VisualHandle = Id
+                    InitialDelay         = InitialDelay + Duration,
+                    VisualEffectUniqueId = Id
                 });
             }
         }

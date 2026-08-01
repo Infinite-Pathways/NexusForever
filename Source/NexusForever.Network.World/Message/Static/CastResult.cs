@@ -59,7 +59,7 @@ namespace NexusForever.Network.World.Message.Static
         [CastResultVital(Vital.Resource1)]
         [CastResultVital(Vital.Volatility)]
         [CastResultVital(Vital.Actuator)]
-        [CastResultVital(Vital.Actuator2)]
+        [CastResultVital(Vital.MedicCore)]
         [CastResultVital(Vital.KineticEnergy)]
         CasterVitalCostResource1              = 0x0033,
         [CastResultVital(Vital.Resource2)]

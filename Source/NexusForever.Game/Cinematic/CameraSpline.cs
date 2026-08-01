@@ -1,6 +1,6 @@
 ﻿using NexusForever.Game.Abstract.Cinematic;
 using NexusForever.Network.Session;
-using NexusForever.Network.World.Message.Model;
+using NexusForever.Network.World.Message.Model.Cinematic;
 
 namespace NexusForever.Game.Cinematic
 {
@@ -8,14 +8,14 @@ namespace NexusForever.Game.Cinematic
     {
         public uint Spline { get; set; }
         public uint SplineMode { get; set; }
-        public uint Delay { get; set; }
+        public uint InitialDelay { get; set; }
         public float Speed { get; set; }
         public bool Target { get; set; }
         public bool UseRotation { get; set; }
 
         public CameraSpline(uint delay, uint spline, uint splineMode, float speed, bool target = false, bool useRotation = true)
         {
-            Delay       = delay;
+            InitialDelay       = delay;
             Spline      = spline;
             SplineMode  = splineMode;
             Speed       = speed;
@@ -27,8 +27,8 @@ namespace NexusForever.Game.Cinematic
         {
             session.EnqueueMessageEncrypted(new ServerCinematicCameraSpline
             {
-                Delay       = Delay,
-                Spline      = Spline,
+                Delay       = InitialDelay,
+                SplineId    = Spline,
                 SplineMode  = SplineMode,
                 Speed       = Speed,
                 Target      = Target,

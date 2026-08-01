@@ -10,6 +10,7 @@ using NexusForever.Game.Static.Spell.Effect;
 using NexusForever.GameTable.Model;
 using NexusForever.Network.World.Combat;
 using NexusForever.Network.World.Message.Model;
+using NexusForever.Network.World.Message.Model.Entity;
 using NexusForever.Network.World.Message.Static;
 
 namespace NexusForever.Game.Spell.Effect.Handler
@@ -100,6 +101,7 @@ namespace NexusForever.Game.Spell.Effect.Handler
 
             target.EnqueueToVisible(new ServerEntityCCStateRemove
             {
+                
                 Guid           = target.Guid,
                 CCState        = data.CCState.Id,
                 CastingId      = spell.CastingId,
@@ -112,12 +114,12 @@ namespace NexusForever.Game.Spell.Effect.Handler
         {
             return new CombatLogCCState
             {
-                State                = ccStateEntry.Id,
-                Result               = result,
-                DiminishingReturnsId = (ushort)ccStateEntry.CcStateDiminishingReturnsId,
-                InterruptArmorTaken  = interruptArmorTaken,
-                BRemoved             = removed,
-                CastData             = new CombatLogCastData
+                State                       = ccStateEntry.Id,
+                Result                      = result,
+                CcStateDiminishingReturnsId = (ushort)ccStateEntry.CcStateDiminishingReturnsId,
+                InterruptArmorTaken         = interruptArmorTaken,
+                BRemoved                    = removed,
+                CastData                    = new CombatLogCastData
                 {
                     CasterId     = spell.Caster.Guid,
                     TargetId     = target.Guid,

@@ -5,6 +5,7 @@ using NexusForever.Game.Static.Combat.CrowdControl;
 using NexusForever.Game.Static.Entity;
 using NexusForever.Network.Message;
 using NexusForever.Network.World.Message.Model;
+using NexusForever.Network.World.Message.Model.Entity;
 
 namespace NexusForever.WorldServer.Network.Message.Handler.Combat
 {
@@ -30,10 +31,10 @@ namespace NexusForever.WorldServer.Network.Message.Handler.Combat
             // 28773 - Dash Backward
             uint spell4Id = packet.Direction switch
             {
-                DashDirection.Left     => 28770,
-                DashDirection.Right    => 28771,
-                DashDirection.Forward  => 28772,
-                DashDirection.Backward => 28773,
+                Game.Static.Entity.Movement.DashDirection.Left     => 28770,
+                Game.Static.Entity.Movement.DashDirection.Right    => 28771,
+                Game.Static.Entity.Movement.DashDirection.Forward  => 28772,
+                Game.Static.Entity.Movement.DashDirection.Backward => 28773,
                 _                      => throw new NotImplementedException()
             };
 

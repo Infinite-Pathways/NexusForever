@@ -8,6 +8,7 @@ using NexusForever.Game.Abstract.Spell.Target;
 using NexusForever.Game.Static.Combat.CrowdControl;
 using NexusForever.Game.Static.Reputation;
 using NexusForever.Network.World.Message.Model;
+using NexusForever.Network.World.Message.Model.Entity;
 using NexusForever.Shared;
 
 namespace NexusForever.Game.Entity

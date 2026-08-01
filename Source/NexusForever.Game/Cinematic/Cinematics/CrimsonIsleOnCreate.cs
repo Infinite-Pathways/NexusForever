@@ -1,6 +1,7 @@
 ﻿using NexusForever.Game.Abstract.Cinematic;
 using NexusForever.Game.Abstract.Cinematic.Cinematics;
-using NexusForever.Network.World.Message.Model;
+using NexusForever.Game.Static.Cinematic;
+using NexusForever.Network.World.Message.Model.Cinematic;
 
 namespace NexusForever.Game.Cinematic.Cinematics
 {
@@ -10,12 +11,12 @@ namespace NexusForever.Game.Cinematic.Cinematics
 
         protected override void Setup()
         {
-            Duration = 18500;
-            InitialFlags = 7;
-            InitialCancelMode = 2;
-            CinematicId = 35;
-            StartTransition = new Transition(0, 5, 1, 1500, 0, 1500);
-            EndTransition = new Transition(17000, 0, 0);
+            Duration          = 18500;
+            InitialFlags      = CinematicFlags.EndImmediate | CinematicFlags.Unknown2 | CinematicFlags.NotifyServer;
+            InitialCancelMode = CancelType.EndImmediate;
+            CinematicId       = 35;
+            StartTransition   = new Transition(0, CameraAddFlags.AddCamera | CameraAddFlags.NotifyCancelNextCamera, 1, 1500, 0, 1500);
+            EndTransition     = new Transition(17000, CameraAddFlags.WhiteOut, 0);
 
             SetupActors();
             SetupTexts();
@@ -53,7 +54,7 @@ namespace NexusForever.Game.Cinematic.Cinematics
 
             Player.Session.EnqueueMessageEncrypted(new ServerCinematicTransitionDurationSet
             {
-                Type = 2,
+                Type = ScaleTransitionType.StartMinimized,
                 DurationStart = 1500,
                 DurationMid = 0,
                 DurationEnd = 1500
